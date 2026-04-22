@@ -81,26 +81,29 @@ def analyze(records):
 # --- Output formatting ---
 
 def print_report(results):
+    avg = results["total_sales"] / results["num_orders"] if results["num_orders"] else 0
+
     print("\n" + SEP)
     print("       SALES ANALYSIS REPORT")
     print(SEP)
     print("  Total Orders : {}".format(results["num_orders"]))
     print("  Total Sales  : ${:,.2f}".format(results["total_sales"]))
+    print("  Avg Order    : ${:,.2f}".format(avg))
     print(DASH)
 
     print("\n  Category-wise Sales:")
     for cat, amount in sorted(results["category_sales"].items(), key=lambda x: -x[1]):
-        bar = "#" * int(amount / 50)
+        bar = "[" + "=" * int(amount / 50) + "]"
         print("  {:<15} ${:>8,.2f}  {}".format(cat, amount, bar))
 
     product, amount = results["top_product"]
-    print("\n  Top Product  : {} (${:,.2f})".format(product, amount))
+    print("\n  >> Top Product: {} (${:,.2f})".format(product, amount))
 
     print("\n  Region-wise Distribution:")
     total = results["total_sales"]
     for region, amount in sorted(results["region_sales"].items(), key=lambda x: -x[1]):
         pct = (amount / total * 100) if total else 0
-        bar = "#" * int(pct / 2)
+        bar = "[" + "=" * int(pct / 2) + "]"
         print("  {:<10} ${:>8,.2f}  {:>5.1f}%  {}".format(region, amount, pct, bar))
 
     print("\n" + SEP)
