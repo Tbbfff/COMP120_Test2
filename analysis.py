@@ -143,3 +143,5 @@ if __name__ == "__main__":
     results = analyze(data)
     print_report(results)
     print_high_value_orders(data)
+    print("\n  Created by Bruno Ferreira - 301326841")
+    print(SEP + "\n")
